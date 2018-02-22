@@ -1,0 +1,15 @@
+#!/bin/bash
+# Copy the qemu image file $DIB_NESTED_VM_IMAGE_PATH under /var/lib/qemu/images
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+DIB_QEMU_VM_IMAGE_PATH=`readlink -f $DIB_QEMU_VM_IMAGE_PATH`
+
+sudo mkdir -p $TMP_MOUNT_PATH/var/lib/qemu/images
+pushd $TMP_MOUNT_PATH/var/lib/qemu/images
+sudo cp -f $DIB_QEMU_VM_IMAGE_PATH . # dib-lint: safe_sudo
+popd
