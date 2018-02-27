@@ -20,6 +20,6 @@ fi
 set -eu
 set -o pipefail
 
-[ -n "$DISTRO_NAME" ]
-
 packer build -only=qemu ${DIB_PACKER_TEMPLATE_PATH}
+mv output-qemu/$(ls output-qemu) image.qcow2
+rmdir output-qemu
