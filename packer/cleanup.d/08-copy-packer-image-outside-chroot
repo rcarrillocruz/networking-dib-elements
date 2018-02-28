@@ -20,6 +20,8 @@ fi
 set -eu
 set -o pipefail
 
-packer build -only=qemu ${DIB_PACKER_TEMPLATE_PATH}
-mv output-qemu/$(ls output-qemu) image.qcow2
-rmdir output-qemu
+PACKER_IMAGE=$(sudo ls $TMP_MOUNT_PATH/output-qemu)
+DIB_UID=$(id -un)
+DIB_GUID=$(id -gn)
+sudo mv $TMP_MOUNT_PATH/output-qemu/${PACKER_IMAGE} image.qcow2
+sudo chown $DIB_UID:$DIB_GUID image.qcow2
